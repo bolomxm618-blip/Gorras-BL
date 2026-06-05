@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gorras Bolo7</title>
+    <link href="https://fonts.googleapis.com/css2?family=Teko:wght@500;600;700&family=Bebas+Neue&display=swap" rel="stylesheet">
+    <style>
+        /* Reset básico */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            color: white;
+            background-color: #050505; /* Fondo oscuro elegante */
+            overflow-x: hidden;
+            /* Bloquea el scroll de la tienda hasta que den ENTER */
+            overflow-y: hidden; 
+        }
+
+        /* ─── NUEVO: ESTILOS PARA LA PANTALLA DE INICIO CON OTRO FONDO ─── */
+        .splash-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 0.8s ease, visibility 0.8s ease;
+            
+            /* AQUÍ CONFIGURAS EL FONDO DEL PRINCIPIO */
+            /* Cambia 'fondo-inicio.jpg' por la imagen que quieras para tu bienvenida */
+            background: linear-gradient(rgba(0,0,0,0.85), rgba(0,0,0,0.85)), url('fondo-inicio.jpg');
+            background-size: cover;
+            background-position: center;
+            background-color: #000000; /* Fondo negro de respaldo */
+        }
+
+        
+.video-splash{
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    z-index:1;
+    filter:brightness(35%);
+}
+
+/* Botón ENTER minimalista */
+        .enter-btn {
+            background: transparent;
+            color: #ffffff;
+            border: 1px solid #ffffff;
+            padding: 12px 45px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            letter-spacing: 6px;
+            cursor: pointer;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+            margin-top: 25px;
+            z-index: 10000;
+        }
+
+        .enter-btn:hover {
+            background: #ffffff;
+            color: #000000;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.6);
+            letter-spacing: 8px;
+        }
+
+        /* Clase CSS para ocultar la bienvenida con suavidad */
+        .splash-hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+        /* ────────────────────────────────────────────────────────────── */
+
+        /* FONDO ANIMADO (VIDEO DE LA TORMENTA) */
+        .video-background {
+            position: fixed;
+            right: 0;
+            bottom: 0;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            z-index: -100;
+            object-fit: cover;
+            /* Ajustado para que sea bien negro y resalten los rayos */
+            filter: none; 
+        }
+
+        /* ESTO ESCONDE EL VIDEO DE LA MÚSICA */
+        .video-musica-oculto {
+            display: none;
+        }
+
+        /* BOTÓN DE MÚSICA ESTILO PREMIUM */
+        .audio-control {
+            position: fixed;
+            top: 25px;
+            right: 25px;
+            z-index: 1000;
+            width: 58px;
+            height: 58px;
+            border-radius: 50%;
+            background: rgba(0,255,204,0.08);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(0,255,204,0.35);
+            color: #00ffcc;
+            font-size: 22px;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            cursor:pointer;
+            transition:all .3s ease;
+        }
+        .audio-control:hover { 
+            transform: scale(1.05);
+            box-shadow: 0px 4px 25px rgba(0, 255, 204, 0.6);
+        }
+
+        /* CONTENIDO DE LA PÁGINA */
+        header {
+            text-align: center;
+            padding: 45px 20px 25px;
+        }
+        header h1 { 
+            font-size: 3.5rem; 
+            letter-spacing: 5px; 
+            text-transform: uppercase;
+            text-shadow: 0 0 20px rgba(255,255,255,0.2);
+        }
+        header p {
+            color: #888;
+            font-size: 1.1rem;
+            margin-top: 10px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* NUEVO DISEÑO DE LA CUADRICULA */
+        .productos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 70px;
+            margin-top: 10px;
+            align-items: end;
+        }
+
+        /* Tarjetas minimalistas con bordes limpios */
+        .producto-tarjeta {
+            background: transparent;
+            border: 1px solid transparent; /* borde invisible */
+            border-radius: 20px;
+            padding: 15px;
+            text-align: center;
+            backdrop-filter: none;
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+        
+        /* Efecto premium sin mostrar borde */
+        .producto-tarjeta:hover {
+            transform: translateY(-8px);
+            border-color: transparent;
+            box-shadow: 0 18px 35px rgba(0, 255, 204, 0.10);
+        }
+
+        .producto-tarjeta .img-container {
+            width: 100%;
+            height: 330px;
+            overflow: visible;
+            border-radius: 15px;
+            margin-bottom: 18px;
+        }
+
+        .producto-tarjeta img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            transition: transform 0.5s ease;
+            filter: drop-shadow(0 22px 22px rgba(0,0,0,0.65));
+        }
+        
+        /* Zoom suave en la imagen de la gorra al pasar el mouse */
+        .producto-tarjeta:hover img {
+            transform: scale(1.05);
+        }
+
+        .producto-tarjeta h3 { 
+            margin-bottom: 8px; 
+            font-size: 1.3rem; 
+            letter-spacing: 1px;
+        }
+        
+        .producto-tarjeta .precio { 
+            color: #00ffcc; 
+            font-size: 1.2rem; 
+            font-weight: bold;
+            text-shadow: 0 0 10px rgba(0, 255, 204, 0.2);
+        }
+
+
+        .comprar-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 14px;
+
+            margin-top: 22px;
+            min-width: 255px;
+            padding: 14px 30px;
+
+            border-radius: 999px;
+            border: 1.5px solid #00ffcc;
+
+            background: rgba(0, 0, 0, 0.18);
+            color: #00ffcc;
+
+            font-size: 0.82rem;
+            font-weight: 900;
+            letter-spacing: 7px;
+            text-decoration: none;
+            text-transform: uppercase;
+
+            cursor: pointer;
+            box-shadow: 0 0 18px rgba(0, 255, 204, 0.18),
+                        inset 0 0 18px rgba(0, 255, 204, 0.04);
+            transition: all 0.3s ease;
+        }
+
+        .comprar-btn::after {
+            content: "🛍";
+            font-size: 16px;
+            letter-spacing: 0;
+        }
+
+        .comprar-btn:hover {
+            transform: translateY(-3px) scale(1.04);
+            background: rgba(0, 255, 204, 0.08);
+            box-shadow: 0 0 28px rgba(0, 255, 204, 0.45),
+                        inset 0 0 25px rgba(0, 255, 204, 0.08);
+        }
+    
+        /* LOGO EN LA TIENDA EN VEZ DEL TEXTO GORRAS BL */
+        .logo-tienda {
+            width: 260px;
+            max-width: 80vw;
+            height: auto;
+            display: block;
+            margin: 0 auto 8px auto;
+            filter: drop-shadow(0 0 18px rgba(255,255,255,0.25));
+        }
+
+        /* VISUALIZADOR 3D PREMIUM EN LA PANTALLA DE INICIO */
+        .logo-3d-wrap {
+            width: min(420px, 85vw);
+            height: min(420px, 55vh);
+            z-index: 2;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: transparent;
+        }
+
+        model-viewer.logo-3d {
+            width: 100%;
+            height: 100%;
+            background-color: transparent;
+            --poster-color: transparent;
+            --progress-bar-color: transparent;
+            --progress-bar-height: 0px;
+            cursor: grab;
+        }
+
+        model-viewer.logo-3d:active {
+            cursor: grabbing;
+        }
+
+        @media (max-width: 600px) {
+            .logo-3d-wrap {
+                width: 300px;
+                height: 300px;
+            }
+
+            .logo-tienda {
+                width: 200px;
+            }
+        }
+
+    
+        .logo-fallback {
+            position: absolute;
+            width: 260px;
+            max-width: 80vw;
+            z-index: 3;
+            display: none;
+            filter: drop-shadow(0 0 25px rgba(255,255,255,0.25));
+            animation: logoFloat 3s ease-in-out infinite;
+        }
+
+        @keyframes logoFloat {
+            0%, 100% { transform: translateY(0px) scale(1); }
+            50% { transform: translateY(-10px) scale(1.03); }
+        }
+
+    
+/* ===== AJUSTES FINALES URBANOS / BL ===== */
+
+/* Fuente urbana general para textos fuertes */
+header p,
+.producto-tarjeta h3,
+.producto-tarjeta .precio,
+.comprar-btn,
+.enter-btn,
+.side-menu a,
+.side-menu button,
+.side-menu h2 {
+    font-family: 'Teko', sans-serif !important;
+}
+
+/* Botón ENTER urbano */
+.enter-btn {
+    background: rgba(0,0,0,0.55) !important;
+    color: #ffffff !important;
+    border: 1px solid rgba(255,255,255,0.75) !important;
+    padding: 14px 58px !important;
+    font-family: 'Teko', sans-serif !important;
+    font-size: 1.9rem !important;
+    font-weight: 700 !important;
+    letter-spacing: 8px !important;
+    text-transform: uppercase !important;
+    cursor: pointer !important;
+    transition: all .3s ease !important;
+    box-shadow: 0 0 18px rgba(255,255,255,0.10) !important;
+}
+
+.enter-btn:hover {
+    background: rgba(255,255,255,0.08) !important;
+    color: #ffffff !important;
+    border-color: rgba(255,255,255,0.95) !important;
+    box-shadow: 0 0 24px rgba(255,255,255,0.25) !important;
+    transform: translateY(-2px) scale(1.03) !important;
+    letter-spacing: 9px !important;
+}
+
+/* Quitar azul/neón y dejar blanco/plateado */
+.audio-control {
+    background: rgba(0,0,0,0.55) !important;
+    border: 1px solid rgba(255,255,255,0.38) !important;
+    color: #ffffff !important;
+    box-shadow: 0 0 22px rgba(255,255,255,0.12) !important;
+}
+
+.audio-control:hover {
+    box-shadow: 0 0 30px rgba(255,255,255,0.28) !important;
+}
+
+/* Precios en blanco/plateado */
+.producto-tarjeta .precio {
+    color: #ffffff !important;
+    font-size: 1.55rem !important;
+    letter-spacing: 1px !important;
+    text-shadow: 0 0 14px rgba(255,255,255,0.45) !important;
+}
+
+/* Hover de tarjetas sin azul */
+.producto-tarjeta:hover {
+    transform: translateY(-8px) !important;
+    border-color: transparent !important;
+    box-shadow: 0 18px 35px rgba(255,255,255,0.08) !important;
+}
+
+/* Botón comprar en blanco/plateado */
+.comprar-btn {
+    border-color: rgba(255,255,255,0.75) !important;
+    color: #ffffff !important;
+    font-size: 1.15rem !important;
+    letter-spacing: 5px !important;
+    box-shadow: 0 0 18px rgba(255,255,255,0.14),
+                inset 0 0 18px rgba(255,255,255,0.04) !important;
+}
+
+.comprar-btn:hover {
+    background: rgba(255,255,255,0.08) !important;
+    color: #ffffff !important;
+    box-shadow: 0 0 28px rgba(255,255,255,0.35),
+                inset 0 0 25px rgba(255,255,255,0.08) !important;
+}
+
+/* Menú del boceto */
+.menu-btn {
+    position: fixed;
+    left: 25px;
+    top: 25px;
+    z-index: 1002;
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: rgba(0,0,0,.55);
+    color: #fff;
+    border: 1px solid rgba(255,255,255,.35);
+    cursor: pointer;
+    font-size: 31px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 0 18px rgba(255,255,255,.10);
+    transition: all .3s ease;
+}
+
+.menu-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 26px rgba(255,255,255,.25);
+}
+
+.side-menu {
+    position: fixed;
+    left: -410px;
+    top: 0;
+    width: 385px;
+    height: 100vh;
+    background: rgba(0,0,0,.96);
+    z-index: 1003;
+    transition: .35s ease;
+    padding: 38px 30px;
+    display: flex;
+    flex-direction: column;
+    border-right: 1px solid rgba(255,255,255,.12);
+    box-shadow: 12px 0 35px rgba(0,0,0,.55);
+}
+
+.side-menu.active {
+    left: 0;
+}
+
+.side-menu h2 {
+    font-size: 2.6rem;
+    letter-spacing: 1px;
+    margin-bottom: 28px;
+    color: #ffffff;
+}
+
+.side-menu a,
+.side-menu .drop-btn {
+    display: block;
+    width: 100%;
+    padding: 21px 0;
+    color: #ffffff;
+    text-decoration: none;
+    background: none;
+    border: none;
+    text-align: left;
+    cursor: pointer;
+    font-size: 1.65rem;
+    font-weight: 700;
+    letter-spacing: .5px;
+    border-bottom: 1px solid rgba(255,255,255,.08);
+    transition: .25s ease;
+}
+
+.side-menu a:hover,
+.side-menu .drop-btn:hover {
+    padding-left: 12px;
+    color: #dcdcdc;
+}
+
+.cat-list {
+    display: none;
+    padding-left: 18px;
+    border-bottom: 1px solid rgba(255,255,255,.08);
+}
+
+.cat-list.active {
+    display: block;
+}
+
+.cat-list a {
+    font-size: 1.25rem !important;
+    font-weight: 600 !important;
+    color: #cfcfcf !important;
+    padding: 12px 0 !important;
+    border-bottom: none !important;
+}
+
+/* Responsive */
+@media (max-width: 700px) {
+    .side-menu {
+        width: 84vw;
+        left: -90vw;
+    }
+
+    .side-menu.active {
+        left: 0;
+    }
+
+    .menu-btn {
+        width: 56px;
+        height: 56px;
+        font-size: 27px;
+    }
+}
+
+
+/* FLECHA PARA CERRAR EL MENÚ */
+.close-menu{
+    position:absolute;
+    top:22px;
+    right:22px;
+    width:48px;
+    height:48px;
+    border-radius:50%;
+    border:1px solid rgba(255,255,255,.30);
+    background:rgba(0,0,0,.55);
+    color:#ffffff;
+    font-family:'Teko', sans-serif;
+    font-size:2rem;
+    line-height:1;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    transition:all .3s ease;
+    box-shadow:0 0 16px rgba(255,255,255,.08);
+}
+
+.close-menu:hover{
+    transform:scale(1.08) translateX(-3px);
+    background:rgba(255,255,255,.08);
+    box-shadow:0 0 24px rgba(255,255,255,.22);
+}
+
+</style>
+
+    <!-- Google model-viewer para logo 3D .glb -->
+    <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+</head>
+<body>
+
+    <!-- MENÚ DESPLEGABLE ESTILO BOCETO -->
+    <button class="menu-btn" onclick="toggleMenu()">☰</button>
+
+    <div class="side-menu" id="sideMenu">
+        <button class="close-menu" onclick="toggleMenu()">←</button>
+        <h2>Menú</h2>
+
+        <a href="#">Iniciar sesión</a>
+
+        <button class="drop-btn" onclick="toggleCat()">Categorías ▼</button>
+        <div class="cat-list" id="catList">
+            <a href="#">Gorras Snapback</a>
+            <a href="#">Gorras Trucker</a>
+            <a href="#">Gorras Curved</a>
+            <a href="#">Gorras Dad Hat</a>
+            <a href="#">Edición Limitada</a>
+        </div>
+
+    </div>
+
+
+    <!-- PANTALLA DE INICIO (LLEVA EL FONDO 1 CONFIGURADO EN EL CSS) -->
+    <div class="splash-screen" id="splashScreen">
+        <video autoplay loop muted playsinline class="video-splash">
+            <source src="fondo-animado2.mp4" type="video/mp4">
+        </video>
+
+        <div class="logo-3d-wrap">
+            <!-- Logo 3D: necesitas tener logo.glb en la misma carpeta -->
+            <model-viewer
+                id="logo3D"
+                class="logo-3d"
+                src="logo.glb"
+                alt="Logo BL 3D"
+                auto-rotate
+                auto-rotate-delay="0"
+                rotation-per-second="35deg"
+                camera-controls
+                interaction-prompt="none"
+                disable-zoom
+                touch-action="pan-y"
+                shadow-intensity="0"
+                exposure="1"
+                environment-image="neutral"
+                ar-status="not-presenting">
+            </model-viewer>
+
+            <!-- Si logo.glb no existe o no carga, aparece este logo normal -->
+            <img id="logoFallback" src="logo.png" alt="Logo BL" class="logo-fallback">
+        </div>
+        <button class="enter-btn" onclick="ingresarTienda()" style="z-index:2;">Enter</button>
+    </div>
+
+    <!-- EL BOTÓN MULTIMEDIA -->
+    <button class="audio-control" onclick="controlarMusica()">▶</button>
+
+    <!-- EL VIDEO DE LA MÚSICA OCULTO -->
+    <audio id="video-cancion" loop>
+        <source src="cancion2.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- EL FONDO 2: EL VIDEO DE LA TORMENTA QUE APARECE AL DAR ENTER -->
+    <video autoplay loop muted playsinline class="video-background">
+        <source src="fondo-animado3.mp4" type="video/mp4">
+    </video>
+
+    <!-- CONTENIDO GLOBAL DE TU TIENDA -->
+    <header>
+        <img src="logo.png" alt="Logo BL" class="logo-tienda">
+        <p>Estilo único en cada detalle</p>
+    </header>
+
+    <div class="container">
+        <div class="productos-grid">
+            
+            <div class="producto-tarjeta">
+                <div class="img-container">
+                    <img src="gorra1.png" alt="Gorra Modelo 1">
+                </div>
+                <h3>Gorra Snapback Black</h3>
+                <p class="precio">$45.00</p>
+                <a class="comprar-btn" href="https://wa.me/50300000000?text=Hola,%20quiero%20comprar%20la%20Gorra%20Snapback%20Black" target="_blank">Comprar ahora</a>
+            </div>
+
+            <div class="producto-tarjeta">
+                <div class="img-container">
+                    <img src="gorra2.png" alt="Gorra Modelo 2">
+                </div>
+                <h3>Gorra Trucker Camo</h3>
+                <p class="precio">$45.00</p>
+                <a class="comprar-btn" href="https://wa.me/50300000000?text=Hola,%20quiero%20comprar%20la%20Gorra%20Trucker%20Camo" target="_blank">Comprar ahora</a>
+            </div>
+
+            <div class="producto-tarjeta">
+                <div class="img-container">
+                    <img src="gorra3.png" alt="Gorra Modelo 3">
+                </div>
+                <h3>Gorra Curved Classic</h3>
+                <p class="precio">$45.00</p>
+                <a class="comprar-btn" href="https://wa.me/50300000000?text=Hola,%20quiero%20comprar%20la%20Gorra%20Curved%20Classic" target="_blank">Comprar ahora</a>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+
+
+        function toggleMenu(){
+            document.getElementById('sideMenu').classList.toggle('active');
+        }
+
+        function toggleCat(){
+            document.getElementById('catList').classList.toggle('active');
+        }
+
+        // Si el archivo logo.glb no carga, muestra logo.png para que no quede vacío
+        const logo3D = document.getElementById("logo3D");
+        const logoFallback = document.getElementById("logoFallback");
+
+        if (logo3D && logoFallback) {
+            logo3D.addEventListener("error", () => {
+                logo3D.style.display = "none";
+                logoFallback.style.display = "block";
+            });
+        }
+
+        // FUNCIÓN CLAVE PARA EL CAMBIO DE FONDOS
+        function ingresarTienda() {
+            // 1. Desvanece el fondo inicial (Fondo 1)
+            document.getElementById("splashScreen").classList.add("splash-hidden");
+            
+            // 2. Devuelve el scroll vertical a la tienda
+            document.body.style.overflowY = "auto";
+            
+            // 3. Enciende la música automáticamente
+            var musicaVideo = document.getElementById("video-cancion");
+            musicaVideo.play();
+            
+            // 4. Actualiza el texto del botón de música de arriba
+            var boton = document.querySelector(".audio-control");
+            boton.innerHTML = "❚❚";
+        }
+
+        // CONTROL DE REPRODUCTOR MANUAL
+        function controlarMusica() {
+            var musicaVideo = document.getElementById("video-cancion");
+            var boton = document.querySelector(".audio-control");
+            
+            if (musicaVideo.paused) {
+                musicaVideo.play();
+                boton.innerHTML = "❚❚";
+            } else {
+                musicaVideo.pause();
+                boton.innerHTML = "▶";
+            }
+        }
+    </script>
+</body>
+</html
