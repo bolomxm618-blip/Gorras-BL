@@ -104,29 +104,8 @@
         }
 
         /* BOTÓN DE MÚSICA ESTILO PREMIUM */
-        .audio-control {
-            position: fixed;
-            top: 25px;
-            right: 25px;
-            z-index: 1000;
-            width: 58px;
-            height: 58px;
-            border-radius: 50%;
-            background: rgba(0,255,204,0.08);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(0,255,204,0.35);
-            color: #00ffcc;
-            font-size: 22px;
-            display:flex;
-            justify-content:center;
-            align-items:center;
-            cursor:pointer;
-            transition:all .3s ease;
-        }
-        .audio-control:hover { 
-            transform: scale(1.05);
-            box-shadow: 0px 4px 25px rgba(0, 255, 204, 0.6);
-        }
+        
+        
 
         /* CONTENIDO DE LA PÁGINA */
         header {
@@ -358,16 +337,9 @@ header p,
 }
 
 /* Quitar azul/neón y dejar blanco/plateado */
-.audio-control {
-    background: rgba(0,0,0,0.55) !important;
-    border: 1px solid rgba(255,255,255,0.38) !important;
-    color: #ffffff !important;
-    box-shadow: 0 0 22px rgba(255,255,255,0.12) !important;
-}
 
-.audio-control:hover {
-    box-shadow: 0 0 30px rgba(255,255,255,0.28) !important;
-}
+
+
 
 /* Precios en blanco/plateado */
 .producto-tarjeta .precio {
@@ -541,10 +513,75 @@ header p,
     box-shadow:0 0 24px rgba(255,255,255,.22);
 }
 
+
+/* LOGO INICIO RÁPIDO SIN MODEL-VIEWER */
+.logo-inicio-wrap{
+    width: min(360px, 80vw);
+    height: auto;
+    z-index: 2;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.logo-inicio{
+    width: 100%;
+    height: auto;
+    display: block;
+    filter: drop-shadow(0 0 28px rgba(255,255,255,0.28));
+    animation: logoFlotarSuave 3s ease-in-out infinite;
+    will-change: transform;
+}
+
+@keyframes logoFlotarSuave{
+    0%,100%{ transform: translateY(0px) scale(1); }
+    50%{ transform: translateY(-10px) scale(1.03); }
+}
+
+
+.audio-control {
+    position: fixed !important;
+    top: 25px !important;
+    right: 28px !important;
+    z-index: 1000 !important;
+
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    backdrop-filter: none !important;
+
+    color: #ffffff !important;
+    font-size: 42px !important;
+    line-height: 1 !important;
+
+    width: auto !important;
+    height: auto !important;
+    padding: 0 !important;
+
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+
+    cursor: pointer !important;
+    transition: all .25s ease !important;
+}
+
+.audio-control:hover {
+    transform: scale(1.15) !important;
+    color: #d8d8d8 !important;
+    box-shadow: none !important;
+    background: transparent !important;
+}
+
 </style>
 
-    <!-- Google model-viewer para logo 3D .glb -->
-    <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+    <!-- Precarga para que video, logo y audio carguen más rápido -->
+    <link rel="preload" href="fondo-animado2.mp4" as="video" type="video/mp4">
+    <link rel="preload" href="fondo-animado3.mp4" as="video" type="video/mp4">
+    <link rel="preload" href="logo.png" as="image">
+    <link rel="preload" href="cancion2.mp3" as="audio" type="audio/mpeg">
+
 </head>
 <body>
 
@@ -571,32 +608,12 @@ header p,
 
     <!-- PANTALLA DE INICIO (LLEVA EL FONDO 1 CONFIGURADO EN EL CSS) -->
     <div class="splash-screen" id="splashScreen">
-        <video autoplay loop muted playsinline class="video-splash">
-            <source src="fondo-animado3.mp4" type="video/mp4">
+        <video autoplay loop muted playsinline preload="auto" class="video-splash">
+            <source src="fondo-animado2.mp4" type="video/mp4">
         </video>
 
-        <div class="logo-3d-wrap">
-            <!-- Logo 3D: necesitas tener logo.glb en la misma carpeta -->
-            <model-viewer
-                id="logo3D"
-                class="logo-3d"
-                src="logo.glb"
-                alt="Logo BL 3D"
-                auto-rotate
-                auto-rotate-delay="0"
-                rotation-per-second="35deg"
-                camera-controls
-                interaction-prompt="none"
-                disable-zoom
-                touch-action="pan-y"
-                shadow-intensity="0"
-                exposure="1"
-                environment-image="neutral"
-                ar-status="not-presenting">
-            </model-viewer>
-
-            <!-- Si logo.glb no existe o no carga, aparece este logo normal -->
-            <img id="logoFallback" src="logo.png" alt="Logo BL" class="logo-fallback">
+        <div class="logo-inicio-wrap">
+            <img src="logo.png" alt="Logo BL" class="logo-inicio">
         </div>
         <button class="enter-btn" onclick="ingresarTienda()" style="z-index:2;">Enter</button>
     </div>
@@ -610,8 +627,8 @@ header p,
     </audio>
 
     <!-- EL FONDO 2: EL VIDEO DE LA TORMENTA QUE APARECE AL DAR ENTER -->
-    <video autoplay loop muted playsinline class="video-background">
-        <source src="fondo-animado2.mp4" type="video/mp4">
+    <video autoplay loop muted playsinline preload="auto" class="video-background">
+        <source src="fondo-animado3.mp4" type="video/mp4">
     </video>
 
     <!-- CONTENIDO GLOBAL DE TU TIENDA -->
@@ -664,17 +681,6 @@ header p,
             document.getElementById('catList').classList.toggle('active');
         }
 
-        // Si el archivo logo.glb no carga, muestra logo.png para que no quede vacío
-        const logo3D = document.getElementById("logo3D");
-        const logoFallback = document.getElementById("logoFallback");
-
-        if (logo3D && logoFallback) {
-            logo3D.addEventListener("error", () => {
-                logo3D.style.display = "none";
-                logoFallback.style.display = "block";
-            });
-        }
-
         // FUNCIÓN CLAVE PARA EL CAMBIO DE FONDOS
         function ingresarTienda() {
             // 1. Desvanece el fondo inicial (Fondo 1)
@@ -689,7 +695,7 @@ header p,
             
             // 4. Actualiza el texto del botón de música de arriba
             var boton = document.querySelector(".audio-control");
-            boton.innerHTML = "❚❚";
+            boton.innerHTML = "⏸";
         }
 
         // CONTROL DE REPRODUCTOR MANUAL
@@ -699,7 +705,7 @@ header p,
             
             if (musicaVideo.paused) {
                 musicaVideo.play();
-                boton.innerHTML = "❚❚";
+                boton.innerHTML = "⏸";
             } else {
                 musicaVideo.pause();
                 boton.innerHTML = "▶";
