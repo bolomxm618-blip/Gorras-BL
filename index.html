@@ -466,6 +466,12 @@ header p,
     border-bottom: none !important;
 }
 
+/* Política y privacidad abajo */
+.side-menu > a:last-child {
+    margin-top: auto;
+    padding-bottom: 40px;
+}
+
 /* Responsive */
 @media (max-width: 700px) {
     .side-menu {
@@ -540,38 +546,97 @@ header p,
 }
 
 
-.audio-control {
+/* BOTÓN DE MÚSICA SOLO ICONO, SIN CÍRCULO Y SIN EMOJI NARANJA EN CELULAR */
+.audio-control{
     position: fixed !important;
     top: 25px !important;
     right: 28px !important;
     z-index: 1000 !important;
 
-    background: transparent !important;
+    width: 46px !important;
+    height: 46px !important;
+    padding: 0 !important;
+
     border: none !important;
+    outline: none !important;
+    background: transparent !important;
     box-shadow: none !important;
     backdrop-filter: none !important;
 
-    color: #ffffff !important;
-    font-size: 42px !important;
-    line-height: 1 !important;
-
-    width: auto !important;
-    height: auto !important;
-    padding: 0 !important;
+    appearance: none !important;
+    -webkit-appearance: none !important;
 
     display: flex !important;
-    justify-content: center !important;
     align-items: center !important;
+    justify-content: center !important;
 
     cursor: pointer !important;
-    transition: all .25s ease !important;
+    transition: transform .25s ease, opacity .25s ease !important;
 }
 
-.audio-control:hover {
-    transform: scale(1.15) !important;
-    color: #d8d8d8 !important;
-    box-shadow: none !important;
+.audio-control:hover{
+    transform: scale(1.12) !important;
+    opacity: .85 !important;
     background: transparent !important;
+    box-shadow: none !important;
+}
+
+/* Icono PLAY hecho con CSS */
+.audio-control .play-icon{
+    width: 0;
+    height: 0;
+    border-top: 14px solid transparent;
+    border-bottom: 14px solid transparent;
+    border-left: 22px solid #ffffff;
+    display: block;
+    filter: drop-shadow(0 0 8px rgba(255,255,255,.30));
+}
+
+/* Icono PAUSA hecho con CSS */
+.audio-control.playing .play-icon{
+    width: 24px;
+    height: 28px;
+    border: none;
+    position: relative;
+}
+
+.audio-control.playing .play-icon::before,
+.audio-control.playing .play-icon::after{
+    content: "";
+    position: absolute;
+    top: 0;
+    width: 8px;
+    height: 28px;
+    background: #ffffff;
+    border-radius: 2px;
+    filter: drop-shadow(0 0 8px rgba(255,255,255,.30));
+}
+
+.audio-control.playing .play-icon::before{ left: 0; }
+.audio-control.playing .play-icon::after{ right: 0; }
+
+/* Mejora carga visual: logo aparece rápido */
+.logo-inicio,
+.logo-tienda{
+    content-visibility: auto;
+}
+
+/* En móvil baja un poco el peso visual */
+@media (max-width: 700px){
+    .video-splash{
+        filter: brightness(45%);
+    }
+
+    .logo-inicio-wrap{
+        width: min(300px, 78vw);
+    }
+
+    .audio-control{
+        top: 20px !important;
+        right: 20px !important;
+        width: 42px !important;
+        height: 42px !important;
+    }
 }
 
 </style>
@@ -603,6 +668,7 @@ header p,
             <a href="#">Edición Limitada</a>
         </div>
 
+        <a href="#">Política y Privacidad</a>
     </div>
 
 
@@ -613,13 +679,13 @@ header p,
         </video>
 
         <div class="logo-inicio-wrap">
-            <img src="logo.png" alt="Logo BL" class="logo-inicio">
+            <img src="logo.png" alt="Logo BL" class="logo-inicio" loading="eager" decoding="sync" fetchpriority="high">
         </div>
         <button class="enter-btn" onclick="ingresarTienda()" style="z-index:2;">Enter</button>
     </div>
 
     <!-- EL BOTÓN MULTIMEDIA -->
-    <button class="audio-control" onclick="controlarMusica()">▶</button>
+    <button class="audio-control" onclick="controlarMusica()" aria-label="Reproducir música"><span class="play-icon"></span></button>
 
     <!-- EL VIDEO DE LA MÚSICA OCULTO -->
     <audio id="video-cancion" loop>
@@ -627,13 +693,13 @@ header p,
     </audio>
 
     <!-- EL FONDO 2: EL VIDEO DE LA TORMENTA QUE APARECE AL DAR ENTER -->
-    <video autoplay loop muted playsinline preload="auto" class="video-background">
+    <video autoplay loop muted playsinline preload="metadata" class="video-background">
         <source src="fondo-animado3.mp4" type="video/mp4">
     </video>
 
     <!-- CONTENIDO GLOBAL DE TU TIENDA -->
     <header>
-        <img src="logo.png" alt="Logo BL" class="logo-tienda">
+        <img src="logo.png" alt="Logo BL" class="logo-tienda" loading="eager" decoding="async">
         <p>Estilo único en cada detalle</p>
     </header>
 
@@ -692,10 +758,9 @@ header p,
             // 3. Enciende la música automáticamente
             var musicaVideo = document.getElementById("video-cancion");
             musicaVideo.play();
-            
             // 4. Actualiza el texto del botón de música de arriba
             var boton = document.querySelector(".audio-control");
-            boton.innerHTML = "⏸";
+            boton.classList.add("playing");
         }
 
         // CONTROL DE REPRODUCTOR MANUAL
@@ -705,10 +770,10 @@ header p,
             
             if (musicaVideo.paused) {
                 musicaVideo.play();
-                boton.innerHTML = "⏸";
+                boton.classList.add("playing");
             } else {
                 musicaVideo.pause();
-                boton.innerHTML = "▶";
+                boton.classList.remove("playing");
             }
         }
     </script>
