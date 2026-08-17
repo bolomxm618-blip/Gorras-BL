@@ -214,7 +214,7 @@
             filter: drop-shadow(0 0 18px rgba(255,255,255,0.25));
         }
 
-        header p, .producto-tarjeta h3, .producto-tarjeta .precio, .comprar-btn, .enter-btn, .side-menu a, .side-menu button, .side-menu h2, .modal-content h3 {
+        header p, .producto-tarjeta h3, .producto-tarjeta .precio, .comprar-btn, .enter-btn, .side-menu a, .side-menu button, .side-menu h2, .modal-content h3, .opcion-pill {
             font-family: 'Teko', sans-serif !important;
         }
 
@@ -240,7 +240,7 @@
             letter-spacing: 9px !important;
         }
 
-        /* MENÚ LATERAL, CARRITO Y MODAL */
+        /* MENÚ LATERAL Y CARRITO */
         .menu-btn, .cart-btn {
             position: fixed;
             top: 25px;
@@ -396,14 +396,14 @@
             transform: scale(1.02);
         }
 
-        /* VENTANA MODAL UNIVERSAL PARA TALLAS Y COLORES */
+        /* VENTANA MODAL ELEGANTE CON BOTONES PERSONALIZADOS */
         .modal-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100vw;
             height: 100vh;
-            background: rgba(0,0,0,0.8);
+            background: rgba(0,0,0,0.85);
             z-index: 1005;
             display: flex;
             justify-content: center;
@@ -422,22 +422,24 @@
         .modal-content {
             background: #111;
             border: 1px solid rgba(255,255,255,0.2);
-            padding: 30px;
+            padding: 25px;
             border-radius: 20px;
             width: 90%;
             max-width: 400px;
             text-align: center;
             position: relative;
             box-shadow: 0 0 30px rgba(0,0,0,0.8);
+            max-height: 90vh;
+            overflow-y: auto;
         }
 
         .modal-img-container {
             width: 100%;
-            height: 220px;
+            height: 180px;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-bottom: 15px;
+            margin-bottom: 10px;
         }
 
         .modal-img-container img {
@@ -450,34 +452,57 @@
         .modal-content h3 {
             font-size: 2rem;
             letter-spacing: 1px;
-            margin-bottom: 5px;
+            margin-bottom: 2px;
         }
 
         .modal-opciones {
-            margin: 15px 0;
+            margin: 12px 0;
             text-align: left;
         }
 
         .modal-opciones label {
             display: block;
             font-family: 'Teko', sans-serif;
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             letter-spacing: 1px;
-            margin-bottom: 4px;
+            margin-bottom: 6px;
             color: #ccc;
         }
 
-        .modal-opciones select {
-            width: 100%;
-            padding: 10px;
-            background: #1a1a1a;
-            color: #fff;
-            border: 1px solid rgba(255,255,255,0.3);
-            border-radius: 8px;
-            font-family: 'Arial', sans-serif;
+        /* DISEÑO DE LOS BOTONES DE SELECCIÓN (TALLAS Y COLORES) */
+        .grupo-opciones {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
             margin-bottom: 12px;
-            outline: none;
-            font-size: 1rem;
+        }
+
+        .opcion-pill {
+            flex: 1;
+            min-width: 80px;
+            padding: 8px 10px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            color: #fff;
+            font-size: 1.25rem;
+            letter-spacing: 1px;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.25s ease;
+        }
+
+        .opcion-pill:hover {
+            border-color: rgba(255, 255, 255, 0.6);
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .opcion-pill.selected {
+            background: #ffffff;
+            color: #000000;
+            border-color: #ffffff;
+            font-weight: bold;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.4);
         }
 
         .close-modal {
@@ -612,6 +637,7 @@
 </head>
 <body>
 
+    <!-- MENÚ LATERAL Y CARRITO -->
     <button class="menu-btn" onclick="toggleMenu()">☰</button>
     <button class="cart-btn" onclick="toggleCart()">🛒</button>
 
@@ -630,6 +656,7 @@
         <a href="#">Política y Privacidad</a>
     </div>
 
+    <!-- PANEL DEL CARRITO -->
     <div class="cart-sidebar" id="cartSidebar">
         <button class="close-cart" onclick="toggleCart()">✕</button>
         <h2>Tu Carrito</h2>
@@ -643,6 +670,7 @@
         <button class="checkout-btn" onclick="enviarPedidoWhatsApp()">Pedir por WhatsApp</button>
     </div>
 
+    <!-- VENTANA MODAL MODERNA CON BOTONES PERSONALIZADOS -->
     <div class="modal-overlay" id="modalProducto">
         <div class="modal-content">
             <button class="close-modal" onclick="cerrarModal()">✕</button>
@@ -653,20 +681,22 @@
             <p class="precio" style="font-size: 1.4rem; color: #fff;">$45.00</p>
             
             <div class="modal-opciones">
-                <label for="tallaSelect">Talla:</label>
-                <select id="tallaSelect">
-                    <option value="7">7</option>
-                    <option value="7 octavo">7 octavo</option>
-                    <option value="7 un cuarto">7 un cuarto</option>
-                </select>
+                <!-- SELECCIÓN DE TALLA -->
+                <label>Talla:</label>
+                <div class="grupo-opciones" id="grupoTallas">
+                    <button class="opcion-pill selected" onclick="seleccionarTalla(this, '7')">7</button>
+                    <button class="opcion-pill" onclick="seleccionarTalla(this, '7 octavo')">7 octavo</button>
+                    <button class="opcion-pill" onclick="seleccionarTalla(this, '7 un cuarto')">7 un cuarto</button>
+                </div>
 
+                <!-- SELECCIÓN DE COLOR (SOLO GORRA EDICIÓN ESPECIAL) -->
                 <div id="contenedorColorModal" style="display: none;">
-                    <label for="colorSelect">Color:</label>
-                    <select id="colorSelect" onchange="cambiarColorModal(this.value)">
-                        <option value="blanco">Blanco/Negro</option>
-                        <option value="rojo">Rojo</option>
-                        <option value="negro">Negro</option>
-                    </select>
+                    <label>Color:</label>
+                    <div class="grupo-opciones" id="grupoColores">
+                        <button class="opcion-pill selected" onclick="seleccionarColor(this, 'blanco', 'gorra6blanca.png')">Blanco</button>
+                        <button class="opcion-pill" onclick="seleccionarColor(this, 'rojo', 'gorra6roja.png')">Rojo</button>
+                        <button class="opcion-pill" onclick="seleccionarColor(this, 'negro', 'gorra6negra.png')">Negro</button>
+                    </div>
                 </div>
             </div>
 
@@ -674,6 +704,7 @@
         </div>
     </div>
 
+    <!-- PANTALLA DE INICIO -->
     <div class="splash-screen" id="splashScreen">
         <video autoplay loop muted playsinline preload="auto" class="video-splash">
             <source src="fondo-animado2.mp4" type="video/mp4">
@@ -747,6 +778,7 @@
                 <button class="comprar-btn" onclick="abrirModal('Gorra Curved Classic (Model 5)', 45.00, 'gorra5.png', false)">Añadir al carrito</button>
             </div>
 
+            <!-- GORRA 6 CON LOS 3 COLORES ESPECÍFICOS -->
             <div class="producto-tarjeta">
                 <div class="img-container">
                     <img src="gorra6blanca.png" alt="Gorra Edición Especial">
@@ -762,6 +794,9 @@
     <script>
         let carrito = [];
         let productoActual = {};
+        let tallaSeleccionada = '7';
+        let colorSeleccionado = 'Blanco';
+        let imagenColorSeleccionado = 'gorra6blanca.png';
 
         function toggleMenu(){
             document.getElementById('sideMenu').classList.toggle('active');
@@ -775,7 +810,7 @@
             document.getElementById('catList').classList.toggle('active');
         }
 
-        // CONTROL DEL MODAL UNIVERSAL
+        // CONTROL DEL MODAL CON BOTONES
         function abrirModal(nombre, precio, imagen, tieneColores) {
             productoActual = { nombre, precio, imagen, tieneColores };
             
@@ -783,10 +818,16 @@
             document.getElementById('imgModal').src = imagen;
             document.getElementById('modalProducto').classList.add('active');
 
+            // Resetear selecciones por defecto
+            tallaSeleccionada = '7';
+            restaurarSeleccionVisual('grupoTallas', 0);
+
             const contenedorColor = document.getElementById('contenedorColorModal');
             if (tieneColores) {
                 contenedorColor.style.display = 'block';
-                document.getElementById('colorSelect').value = 'blanco'; // Reinicia a blanco por defecto
+                colorSeleccionado = 'Blanco';
+                imagenColorSeleccionado = 'gorra6blanca.png';
+                restaurarSeleccionVisual('grupoColores', 0);
             } else {
                 contenedorColor.style.display = 'none';
             }
@@ -796,26 +837,42 @@
             document.getElementById('modalProducto').classList.remove('active');
         }
 
-        function cambiarColorModal(color) {
-            const img = document.getElementById('imgModal');
-            if (color === 'blanco') {
-                img.src = 'gorra6blanca.png';
-            } else if (color === 'rojo') {
-                img.src = 'gorra6roja.png';
-            } else if (color === 'negro') {
-                img.src = 'gorra6negra.png';
+        function seleccionarTalla(elemento, talla) {
+            tallaSeleccionada = talla;
+            actualizarClaseActiva('grupoTallas', elemento);
+        }
+
+        function seleccionarColor(elemento, colorNombre, imagenArchivo) {
+            colorSeleccionado = colorNombre.charAt(0).toUpperCase() + colorNombre.slice(1);
+            imagenColorSeleccionado = imagenArchivo;
+            document.getElementById('imgModal').src = imagenArchivo;
+            actualizarClaseActiva('grupoColores', elemento);
+        }
+
+        function actualizarClaseActiva(grupoId, elementoSeleccionado) {
+            const botones = document.getElementById(grupoId).getElementsByClassName('opcion-pill');
+            for (let btn of botones) {
+                btn.classList.remove('selected');
+            }
+            elementoSeleccionado.classList.add('selected');
+        }
+
+        function restaurarSeleccionVisual(grupoId, indice) {
+            const botones = document.getElementById(grupoId).getElementsByClassName('opcion-pill');
+            for (let i = 0; i < botones.length; i++) {
+                botones[i].classList.remove('selected');
+                if (i === indice) {
+                    botones[i].classList.add('selected');
+                }
             }
         }
 
         function confirmarAgregado() {
-            const talla = document.getElementById('tallaSelect').value;
             let nombreFinal = productoActual.nombre;
-            let detalles = `Talla: ${talla}`;
+            let detalles = `Talla: ${tallaSeleccionada}`;
 
             if (productoActual.tieneColores) {
-                const colorSelect = document.getElementById('colorSelect');
-                const colorTexto = colorSelect.options[colorSelect.selectedIndex].text;
-                nombreFinal = `Gorra Edición Especial (${colorTexto})`;
+                nombreFinal = `Gorra Edición Especial (${colorSeleccionado})`;
             }
 
             carrito.push({ nombre: nombreFinal, precio: productoActual.precio, detalles: detalles });
