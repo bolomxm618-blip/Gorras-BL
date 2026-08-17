@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gorras Bolo7</title>
+    <title>Gorraland.ah</title>
     <link href="https://fonts.googleapis.com/css2?family=Teko:wght@500;600;700&family=Bebas+Neue&display=swap" rel="stylesheet">
     <style>
         /* Reset básico */
@@ -12,13 +12,12 @@
         body {
             font-family: 'Arial', sans-serif;
             color: white;
-            background-color: #050505; /* Fondo oscuro elegante */
+            background-color: #050505;
             overflow-x: hidden;
-            /* Bloquea el scroll de la tienda hasta que den ENTER */
             overflow-y: hidden; 
         }
 
-        /* ─── NUEVO: ESTILOS PARA LA PANTALLA DE INICIO CON OTRO FONDO ─── */
+        /* PANTALLA DE INICIO */
         .splash-screen {
             position: fixed;
             top: 0;
@@ -31,28 +30,23 @@
             justify-content: center;
             align-items: center;
             transition: opacity 0.8s ease, visibility 0.8s ease;
-            
-            /* AQUÍ CONFIGURAS EL FONDO DEL PRINCIPIO */
-            /* Cambia 'fondo-inicio.jpg' por la imagen que quieras para tu bienvenida */
             background: linear-gradient(rgba(0,0,0,0.85), rgba(0,0,0,0.85)), url('fondo-inicio.jpg');
             background-size: cover;
             background-position: center;
-            background-color: #000000; /* Fondo negro de respaldo */
+            background-color: #000000;
         }
 
-        
-.video-splash{
-    position:absolute;
-    top:0;
-    left:0;
-    width:100%;
-    height:100%;
-    object-fit:cover;
-    z-index:1;
-    filter:brightness(35%);
-}
+        .video-splash {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 1;
+            filter: brightness(35%);
+        }
 
-/* Botón ENTER minimalista */
         .enter-btn {
             background: transparent;
             color: #ffffff;
@@ -75,15 +69,12 @@
             letter-spacing: 8px;
         }
 
-        /* Clase CSS para ocultar la bienvenida con suavidad */
         .splash-hidden {
             opacity: 0;
             visibility: hidden;
             pointer-events: none;
         }
-        /* ────────────────────────────────────────────────────────────── */
 
-        /* FONDO ANIMADO (VIDEO DE LA TORMENTA) */
         .video-background {
             position: fixed;
             right: 0;
@@ -94,20 +85,9 @@
             height: auto;
             z-index: -100;
             object-fit: cover;
-            /* Ajustado para que sea bien negro y resalten los rayos */
             filter: none; 
         }
 
-        /* ESTO ESCONDE EL VIDEO DE LA MÚSICA */
-        .video-musica-oculto {
-            display: none;
-        }
-
-        /* BOTÓN DE MÚSICA ESTILO PREMIUM */
-        
-        
-
-        /* CONTENIDO DE LA PÁGINA */
         header {
             text-align: center;
             padding: 45px 20px 25px;
@@ -130,7 +110,6 @@
             padding: 20px;
         }
 
-        /* NUEVO DISEÑO DE LA CUADRICULA */
         .productos-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -139,84 +118,78 @@
             align-items: end;
         }
 
-        /* Tarjetas minimalistas con bordes limpios */
         .producto-tarjeta {
-            background: transparent;
-            border: 1px solid transparent; /* borde invisible */
+            background: rgba(0,0,0,0.4);
+            border: 1px solid rgba(255,255,255,0.08);
             border-radius: 20px;
-            padding: 15px;
+            padding: 20px;
             text-align: center;
-            backdrop-filter: none;
+            backdrop-filter: blur(10px);
             transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
         }
         
-        /* Efecto premium sin mostrar borde */
         .producto-tarjeta:hover {
             transform: translateY(-8px);
-            border-color: transparent;
-            box-shadow: 0 18px 35px rgba(0, 255, 204, 0.10);
+            border-color: rgba(255,255,255,0.2);
+            box-shadow: 0 18px 35px rgba(255,255,255,0.08);
         }
 
         .producto-tarjeta .img-container {
             width: 100%;
-            height: 330px;
+            height: 280px;
             overflow: visible;
             border-radius: 15px;
             margin-bottom: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .producto-tarjeta img {
-            width: 100%;
-            height: 100%;
+            max-width: 100%;
+            max-height: 100%;
             object-fit: contain;
             transition: transform 0.5s ease;
             filter: drop-shadow(0 22px 22px rgba(0,0,0,0.65));
         }
         
-        /* Zoom suave en la imagen de la gorra al pasar el mouse */
         .producto-tarjeta:hover img {
             transform: scale(1.05);
         }
 
         .producto-tarjeta h3 { 
             margin-bottom: 8px; 
-            font-size: 1.3rem; 
+            font-size: 1.5rem; 
             letter-spacing: 1px;
         }
         
         .producto-tarjeta .precio { 
-            color: #00ffcc; 
-            font-size: 1.2rem; 
+            color: #ffffff !important; 
+            font-size: 1.55rem !important; 
             font-weight: bold;
-            text-shadow: 0 0 10px rgba(0, 255, 204, 0.2);
+            text-shadow: 0 0 14px rgba(255,255,255,0.45);
+            margin-bottom: 12px;
         }
-
 
         .comprar-btn {
             display: inline-flex;
             align-items: center;
             justify-content: center;
             gap: 14px;
-
-            margin-top: 22px;
-            min-width: 255px;
-            padding: 14px 30px;
-
+            margin-top: 15px;
+            width: 100%;
+            padding: 12px 20px;
             border-radius: 999px;
-            border: 1.5px solid #00ffcc;
-
+            border: 1.5px solid rgba(255,255,255,0.75);
             background: rgba(0, 0, 0, 0.18);
-            color: #00ffcc;
-
-            font-size: 0.82rem;
+            color: #ffffff;
+            font-size: 1.15rem;
             font-weight: 900;
-            letter-spacing: 7px;
+            letter-spacing: 5px;
             text-decoration: none;
             text-transform: uppercase;
-
             cursor: pointer;
-            box-shadow: 0 0 18px rgba(0, 255, 204, 0.18),
-                        inset 0 0 18px rgba(0, 255, 204, 0.04);
+            box-shadow: 0 0 18px rgba(255,255,255,0.14), inset 0 0 18px rgba(255,255,255,0.04);
             transition: all 0.3s ease;
         }
 
@@ -227,13 +200,11 @@
         }
 
         .comprar-btn:hover {
-            transform: translateY(-3px) scale(1.04);
-            background: rgba(0, 255, 204, 0.08);
-            box-shadow: 0 0 28px rgba(0, 255, 204, 0.45),
-                        inset 0 0 25px rgba(0, 255, 204, 0.08);
+            transform: translateY(-3px) scale(1.02);
+            background: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 0 28px rgba(255,255,255,0.35), inset 0 0 25px rgba(255,255,255,0.08);
         }
     
-        /* LOGO EN LA TIENDA EN VEZ DEL TEXTO GORRAS BL */
         .logo-tienda {
             width: 260px;
             max-width: 80vw;
@@ -243,422 +214,411 @@
             filter: drop-shadow(0 0 18px rgba(255,255,255,0.25));
         }
 
-        /* VISUALIZADOR 3D PREMIUM EN LA PANTALLA DE INICIO */
-        .logo-3d-wrap {
-            width: min(420px, 85vw);
-            height: min(420px, 55vh);
+        header p, .producto-tarjeta h3, .producto-tarjeta .precio, .comprar-btn, .enter-btn, .side-menu a, .side-menu button, .side-menu h2, .modal-content h3 {
+            font-family: 'Teko', sans-serif !important;
+        }
+
+        .enter-btn {
+            background: rgba(0,0,0,0.55) !important;
+            color: #ffffff !important;
+            border: 1px solid rgba(255,255,255,0.75) !important;
+            padding: 14px 58px !important;
+            font-size: 1.9rem !important;
+            font-weight: 700 !important;
+            letter-spacing: 8px !important;
+            text-transform: uppercase !important;
+            cursor: pointer !important;
+            transition: all .3s ease !important;
+            box-shadow: 0 0 18px rgba(255,255,255,0.10) !important;
+        }
+
+        .enter-btn:hover {
+            background: rgba(255,255,255,0.08) !important;
+            border-color: rgba(255,255,255,0.95) !important;
+            box-shadow: 0 0 24px rgba(255,255,255,0.25) !important;
+            transform: translateY(-2px) scale(1.03) !important;
+            letter-spacing: 9px !important;
+        }
+
+        /* MENÚ LATERAL, CARRITO Y MODAL */
+        .menu-btn, .cart-btn {
+            position: fixed;
+            top: 25px;
+            z-index: 1002;
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: rgba(0,0,0,.55);
+            color: #fff;
+            border: 1px solid rgba(255,255,255,.35);
+            cursor: pointer;
+            font-size: 26px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 0 18px rgba(255,255,255,.10);
+            transition: all .3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .menu-btn { left: 25px; }
+        .cart-btn { right: 85px; }
+
+        .menu-btn:hover, .cart-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 26px rgba(255,255,255,.25);
+        }
+
+        .side-menu, .cart-sidebar {
+            position: fixed;
+            top: 0;
+            width: 385px;
+            height: 100vh;
+            background: rgba(0,0,0,.96);
+            z-index: 1003;
+            transition: .35s ease;
+            padding: 38px 25px;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 12px 0 35px rgba(0,0,0,.55);
+        }
+
+        .side-menu { left: -410px; border-right: 1px solid rgba(255,255,255,.12); }
+        .side-menu.active { left: 0; }
+
+        .cart-sidebar { right: -410px; border-left: 1px solid rgba(255,255,255,.12); box-shadow: -12px 0 35px rgba(0,0,0,.55); }
+        .cart-sidebar.active { right: 0; }
+
+        .side-menu h2, .cart-sidebar h2 {
+            font-size: 2.6rem;
+            letter-spacing: 1px;
+            margin-bottom: 28px;
+            color: #ffffff;
+        }
+
+        .side-menu a, .side-menu .drop-btn {
+            display: block;
+            width: 100%;
+            padding: 21px 0;
+            color: #ffffff;
+            text-decoration: none;
+            background: none;
+            border: none;
+            text-align: left;
+            cursor: pointer;
+            font-size: 1.65rem;
+            font-weight: 700;
+            letter-spacing: .5px;
+            border-bottom: 1px solid rgba(255,255,255,.08);
+            transition: .25s ease;
+        }
+
+        .side-menu a:hover, .side-menu .drop-btn:hover {
+            padding-left: 12px;
+            color: #dcdcdc;
+        }
+
+        .cat-list {
+            display: none;
+            padding-left: 18px;
+            border-bottom: 1px solid rgba(255,255,255,.08);
+        }
+
+        .cat-list.active { display: block; }
+
+        .cat-list a {
+            font-size: 1.25rem !important;
+            font-weight: 600 !important;
+            color: #cfcfcf !important;
+            padding: 12px 0 !important;
+            border-bottom: none !important;
+        }
+
+        .cart-items {
+            flex-grow: 1;
+            overflow-y: auto;
+            margin-bottom: 15px;
+            max-height: 50vh;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255,255,255,0.05);
+            padding: 10px 12px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+
+        .cart-item-info span {
+            display: block;
+            font-size: 0.95rem;
+            color: #aaa;
+        }
+
+        .cart-item-remove {
+            background: transparent;
+            border: none;
+            color: #ff5555;
+            font-size: 1.2rem;
+            cursor: pointer;
+        }
+
+        .cart-total {
+            font-size: 1.8rem;
+            border-top: 1px solid rgba(255,255,255,0.2);
+            padding-top: 15px;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .checkout-btn {
+            background: #25D366;
+            color: #fff;
+            border: none;
+            padding: 14px;
+            font-family: 'Teko', sans-serif;
+            font-size: 1.5rem;
+            letter-spacing: 2px;
+            border-radius: 8px;
+            cursor: pointer;
+            width: 100%;
+            text-transform: uppercase;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .checkout-btn:hover {
+            opacity: 0.9;
+            transform: scale(1.02);
+        }
+
+        /* VENTANA MODAL UNIVERSAL PARA TALLAS Y COLORES */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0,0,0,0.8);
+            z-index: 1005;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(8px);
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            background: #111;
+            border: 1px solid rgba(255,255,255,0.2);
+            padding: 30px;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 0 30px rgba(0,0,0,0.8);
+        }
+
+        .modal-img-container {
+            width: 100%;
+            height: 220px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+        }
+
+        .modal-img-container img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            filter: drop-shadow(0 15px 15px rgba(0,0,0,0.6));
+        }
+
+        .modal-content h3 {
+            font-size: 2rem;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .modal-opciones {
+            margin: 15px 0;
+            text-align: left;
+        }
+
+        .modal-opciones label {
+            display: block;
+            font-family: 'Teko', sans-serif;
+            font-size: 1.2rem;
+            letter-spacing: 1px;
+            margin-bottom: 4px;
+            color: #ccc;
+        }
+
+        .modal-opciones select {
+            width: 100%;
+            padding: 10px;
+            background: #1a1a1a;
+            color: #fff;
+            border: 1px solid rgba(255,255,255,0.3);
+            border-radius: 8px;
+            font-family: 'Arial', sans-serif;
+            margin-bottom: 12px;
+            outline: none;
+            font-size: 1rem;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: transparent;
+            border: none;
+            color: #fff;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .close-menu, .close-cart{
+            position: absolute;
+            top: 22px;
+            right: 22px;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            border: 1px solid rgba(255,255,255,.30);
+            background: rgba(0,0,0,.55);
+            color: #ffffff;
+            font-family: 'Teko', sans-serif;
+            font-size: 2rem;
+            line-height: 1;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all .3s ease;
+            box-shadow: 0 0 16px rgba(255,255,255,.08);
+        }
+
+        .close-menu:hover, .close-cart:hover{
+            transform: scale(1.08);
+            background: rgba(255,255,255,.08);
+        }
+
+        .logo-inicio-wrap{
+            width: min(360px, 80vw);
+            height: auto;
             z-index: 2;
             position: relative;
             display: flex;
             justify-content: center;
             align-items: center;
-            background: transparent;
         }
 
-        model-viewer.logo-3d {
+        .logo-inicio{
             width: 100%;
-            height: 100%;
-            background-color: transparent;
-            --poster-color: transparent;
-            --progress-bar-color: transparent;
-            --progress-bar-height: 0px;
-            cursor: grab;
+            height: auto;
+            display: block;
+            filter: drop-shadow(0 0 28px rgba(255,255,255,0.28));
+            animation: logoFlotarSuave 3s ease-in-out infinite;
         }
 
-        model-viewer.logo-3d:active {
-            cursor: grabbing;
+        @keyframes logoFlotarSuave{
+            0%,100%{ transform: translateY(0px) scale(1); }
+            50%{ transform: translateY(-10px) scale(1.03); }
         }
 
-        @media (max-width: 600px) {
-            .logo-3d-wrap {
-                width: 300px;
-                height: 300px;
-            }
-
-            .logo-tienda {
-                width: 200px;
-            }
+        .audio-control{
+            position: fixed !important;
+            top: 25px !important;
+            right: 25px !important;
+            z-index: 1000 !important;
+            width: 56px !important;
+            height: 56px !important;
+            padding: 0 !important;
+            border: 1px solid rgba(255,255,255,.35) !important;
+            outline: none !important;
+            background: rgba(0,0,0,.55) !important;
+            border-radius: 50% !important;
+            backdrop-filter: blur(10px);
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            cursor: pointer !important;
+            box-shadow: 0 0 18px rgba(255,255,255,.10) !important;
+            transition: transform .25s ease !important;
         }
 
-    
-        .logo-fallback {
+        .audio-control:hover{
+            transform: scale(1.05) !important;
+            box-shadow: 0 0 26px rgba(255,255,255,.25) !important;
+        }
+
+        .audio-control .play-icon{
+            width: 0;
+            height: 0;
+            border-top: 10px solid transparent;
+            border-bottom: 10px solid transparent;
+            border-left: 16px solid #ffffff;
+            margin-left: 3px;
+        }
+
+        .audio-control.playing .play-icon{
+            width: 16px;
+            height: 20px;
+            border: none;
+            position: relative;
+            margin-left: 0;
+        }
+
+        .audio-control.playing .play-icon::before,
+        .audio-control.playing .play-icon::after{
+            content: "";
             position: absolute;
-            width: 260px;
-            max-width: 80vw;
-            z-index: 3;
-            display: none;
-            filter: drop-shadow(0 0 25px rgba(255,255,255,0.25));
-            animation: logoFloat 3s ease-in-out infinite;
+            top: 0;
+            width: 5px;
+            height: 20px;
+            background: #ffffff;
+            border-radius: 2px;
         }
 
-        @keyframes logoFloat {
-            0%, 100% { transform: translateY(0px) scale(1); }
-            50% { transform: translateY(-10px) scale(1.03); }
+        .audio-control.playing .play-icon::before{ left: 0; }
+        .audio-control.playing .play-icon::after{ right: 0; }
+
+        @media (max-width: 700px){
+            .side-menu, .cart-sidebar { width: 84vw; left: -90vw; }
+            .side-menu.active, .cart-sidebar.active { left: 0; right: 0; }
+            .cart-sidebar { right: -90vw; left: auto; }
+            .cart-btn { right: 85px; top: 25px; }
         }
+    </style>
 
-    
-/* ===== AJUSTES FINALES URBANOS / BL ===== */
-
-/* Fuente urbana general para textos fuertes */
-header p,
-.producto-tarjeta h3,
-.producto-tarjeta .precio,
-.comprar-btn,
-.enter-btn,
-.side-menu a,
-.side-menu button,
-.side-menu h2 {
-    font-family: 'Teko', sans-serif !important;
-}
-
-/* Botón ENTER urbano */
-.enter-btn {
-    background: rgba(0,0,0,0.55) !important;
-    color: #ffffff !important;
-    border: 1px solid rgba(255,255,255,0.75) !important;
-    padding: 14px 58px !important;
-    font-family: 'Teko', sans-serif !important;
-    font-size: 1.9rem !important;
-    font-weight: 700 !important;
-    letter-spacing: 8px !important;
-    text-transform: uppercase !important;
-    cursor: pointer !important;
-    transition: all .3s ease !important;
-    box-shadow: 0 0 18px rgba(255,255,255,0.10) !important;
-}
-
-.enter-btn:hover {
-    background: rgba(255,255,255,0.08) !important;
-    color: #ffffff !important;
-    border-color: rgba(255,255,255,0.95) !important;
-    box-shadow: 0 0 24px rgba(255,255,255,0.25) !important;
-    transform: translateY(-2px) scale(1.03) !important;
-    letter-spacing: 9px !important;
-}
-
-/* Quitar azul/neón y dejar blanco/plateado */
-
-
-
-
-/* Precios en blanco/plateado */
-.producto-tarjeta .precio {
-    color: #ffffff !important;
-    font-size: 1.55rem !important;
-    letter-spacing: 1px !important;
-    text-shadow: 0 0 14px rgba(255,255,255,0.45) !important;
-}
-
-/* Hover de tarjetas sin azul */
-.producto-tarjeta:hover {
-    transform: translateY(-8px) !important;
-    border-color: transparent !important;
-    box-shadow: 0 18px 35px rgba(255,255,255,0.08) !important;
-}
-
-/* Botón comprar en blanco/plateado */
-.comprar-btn {
-    border-color: rgba(255,255,255,0.75) !important;
-    color: #ffffff !important;
-    font-size: 1.15rem !important;
-    letter-spacing: 5px !important;
-    box-shadow: 0 0 18px rgba(255,255,255,0.14),
-                inset 0 0 18px rgba(255,255,255,0.04) !important;
-}
-
-.comprar-btn:hover {
-    background: rgba(255,255,255,0.08) !important;
-    color: #ffffff !important;
-    box-shadow: 0 0 28px rgba(255,255,255,0.35),
-                inset 0 0 25px rgba(255,255,255,0.08) !important;
-}
-
-/* Menú del boceto */
-.menu-btn {
-    position: fixed;
-    left: 25px;
-    top: 25px;
-    z-index: 1002;
-    width: 64px;
-    height: 64px;
-    border-radius: 50%;
-    background: rgba(0,0,0,.55);
-    color: #fff;
-    border: 1px solid rgba(255,255,255,.35);
-    cursor: pointer;
-    font-size: 31px;
-    backdrop-filter: blur(10px);
-    box-shadow: 0 0 18px rgba(255,255,255,.10);
-    transition: all .3s ease;
-}
-
-.menu-btn:hover {
-    transform: scale(1.05);
-    box-shadow: 0 0 26px rgba(255,255,255,.25);
-}
-
-.side-menu {
-    position: fixed;
-    left: -410px;
-    top: 0;
-    width: 385px;
-    height: 100vh;
-    background: rgba(0,0,0,.96);
-    z-index: 1003;
-    transition: .35s ease;
-    padding: 38px 30px;
-    display: flex;
-    flex-direction: column;
-    border-right: 1px solid rgba(255,255,255,.12);
-    box-shadow: 12px 0 35px rgba(0,0,0,.55);
-}
-
-.side-menu.active {
-    left: 0;
-}
-
-.side-menu h2 {
-    font-size: 2.6rem;
-    letter-spacing: 1px;
-    margin-bottom: 28px;
-    color: #ffffff;
-}
-
-.side-menu a,
-.side-menu .drop-btn {
-    display: block;
-    width: 100%;
-    padding: 21px 0;
-    color: #ffffff;
-    text-decoration: none;
-    background: none;
-    border: none;
-    text-align: left;
-    cursor: pointer;
-    font-size: 1.65rem;
-    font-weight: 700;
-    letter-spacing: .5px;
-    border-bottom: 1px solid rgba(255,255,255,.08);
-    transition: .25s ease;
-}
-
-.side-menu a:hover,
-.side-menu .drop-btn:hover {
-    padding-left: 12px;
-    color: #dcdcdc;
-}
-
-.cat-list {
-    display: none;
-    padding-left: 18px;
-    border-bottom: 1px solid rgba(255,255,255,.08);
-}
-
-.cat-list.active {
-    display: block;
-}
-
-.cat-list a {
-    font-size: 1.25rem !important;
-    font-weight: 600 !important;
-    color: #cfcfcf !important;
-    padding: 12px 0 !important;
-    border-bottom: none !important;
-}
-
-/* Política y privacidad abajo */
-.side-menu > a:last-child {
-    margin-top: auto;
-    padding-bottom: 40px;
-}
-
-/* Responsive */
-@media (max-width: 700px) {
-    .side-menu {
-        width: 84vw;
-        left: -90vw;
-    }
-
-    .side-menu.active {
-        left: 0;
-    }
-
-    .menu-btn {
-        width: 56px;
-        height: 56px;
-        font-size: 27px;
-    }
-}
-
-
-/* FLECHA PARA CERRAR EL MENÚ */
-.close-menu{
-    position:absolute;
-    top:22px;
-    right:22px;
-    width:48px;
-    height:48px;
-    border-radius:50%;
-    border:1px solid rgba(255,255,255,.30);
-    background:rgba(0,0,0,.55);
-    color:#ffffff;
-    font-family:'Teko', sans-serif;
-    font-size:2rem;
-    line-height:1;
-    cursor:pointer;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    transition:all .3s ease;
-    box-shadow:0 0 16px rgba(255,255,255,.08);
-}
-
-.close-menu:hover{
-    transform:scale(1.08) translateX(-3px);
-    background:rgba(255,255,255,.08);
-    box-shadow:0 0 24px rgba(255,255,255,.22);
-}
-
-
-/* LOGO INICIO RÁPIDO SIN MODEL-VIEWER */
-.logo-inicio-wrap{
-    width: min(360px, 80vw);
-    height: auto;
-    z-index: 2;
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.logo-inicio{
-    width: 100%;
-    height: auto;
-    display: block;
-    filter: drop-shadow(0 0 28px rgba(255,255,255,0.28));
-    animation: logoFlotarSuave 3s ease-in-out infinite;
-    will-change: transform;
-}
-
-@keyframes logoFlotarSuave{
-    0%,100%{ transform: translateY(0px) scale(1); }
-    50%{ transform: translateY(-10px) scale(1.03); }
-}
-
-
-/* BOTÓN DE MÚSICA SOLO ICONO, SIN CÍRCULO Y SIN EMOJI NARANJA EN CELULAR */
-.audio-control{
-    position: fixed !important;
-    top: 25px !important;
-    right: 28px !important;
-    z-index: 1000 !important;
-
-    width: 46px !important;
-    height: 46px !important;
-    padding: 0 !important;
-
-    border: none !important;
-    outline: none !important;
-    background: transparent !important;
-    box-shadow: none !important;
-    backdrop-filter: none !important;
-
-    appearance: none !important;
-    -webkit-appearance: none !important;
-
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-
-    cursor: pointer !important;
-    transition: transform .25s ease, opacity .25s ease !important;
-}
-
-.audio-control:hover{
-    transform: scale(1.12) !important;
-    opacity: .85 !important;
-    background: transparent !important;
-    box-shadow: none !important;
-}
-
-/* Icono PLAY hecho con CSS */
-.audio-control .play-icon{
-    width: 0;
-    height: 0;
-    border-top: 14px solid transparent;
-    border-bottom: 14px solid transparent;
-    border-left: 22px solid #ffffff;
-    display: block;
-    filter: drop-shadow(0 0 8px rgba(255,255,255,.30));
-}
-
-/* Icono PAUSA hecho con CSS */
-.audio-control.playing .play-icon{
-    width: 24px;
-    height: 28px;
-    border: none;
-    position: relative;
-}
-
-.audio-control.playing .play-icon::before,
-.audio-control.playing .play-icon::after{
-    content: "";
-    position: absolute;
-    top: 0;
-    width: 8px;
-    height: 28px;
-    background: #ffffff;
-    border-radius: 2px;
-    filter: drop-shadow(0 0 8px rgba(255,255,255,.30));
-}
-
-.audio-control.playing .play-icon::before{ left: 0; }
-.audio-control.playing .play-icon::after{ right: 0; }
-
-/* Mejora carga visual: logo aparece rápido */
-.logo-inicio,
-.logo-tienda{
-    content-visibility: auto;
-}
-
-/* En móvil baja un poco el peso visual */
-@media (max-width: 700px){
-    .video-splash{
-        filter: brightness(45%);
-    }
-
-    .logo-inicio-wrap{
-        width: min(300px, 78vw);
-    }
-
-    .audio-control{
-        top: 20px !important;
-        right: 20px !important;
-        width: 42px !important;
-        height: 42px !important;
-    }
-}
-
-</style>
-
-    <!-- Precarga para que video, logo y audio carguen más rápido -->
     <link rel="preload" href="fondo-animado2.mp4" as="video" type="video/mp4">
     <link rel="preload" href="fondo-animado3.mp4" as="video" type="video/mp4">
-    <link rel="preload" href="logo.png" as="image">
-    <link rel="preload" href="cancion2.mp3" as="audio" type="audio/mpeg">
-
+    <link rel="preload" href="logo2.png" as="image">
+    <link rel="preload" href="cancion3.mp3" as="audio" type="audio/mpeg">
 </head>
 <body>
 
-    <!-- MENÚ DESPLEGABLE ESTILO BOCETO -->
     <button class="menu-btn" onclick="toggleMenu()">☰</button>
+    <button class="cart-btn" onclick="toggleCart()">🛒</button>
 
     <div class="side-menu" id="sideMenu">
         <button class="close-menu" onclick="toggleMenu()">←</button>
         <h2>Menú</h2>
-
         <a href="#">Iniciar sesión</a>
-
         <button class="drop-btn" onclick="toggleCat()">Categorías ▼</button>
         <div class="cat-list" id="catList">
             <a href="#">Gorras Snapback</a>
@@ -667,39 +627,75 @@ header p,
             <a href="#">Gorras Dad Hat</a>
             <a href="#">Edición Limitada</a>
         </div>
-
         <a href="#">Política y Privacidad</a>
     </div>
 
+    <div class="cart-sidebar" id="cartSidebar">
+        <button class="close-cart" onclick="toggleCart()">✕</button>
+        <h2>Tu Carrito</h2>
+        <div class="cart-items" id="cartItemsContainer">
+            <p style="color: #777; text-align: center; margin-top: 20px;">El carrito está vacío</p>
+        </div>
+        <div class="cart-total">
+            <span>Total:</span>
+            <span id="cartTotalPrice">$0.00</span>
+        </div>
+        <button class="checkout-btn" onclick="enviarPedidoWhatsApp()">Pedir por WhatsApp</button>
+    </div>
 
-    <!-- PANTALLA DE INICIO (LLEVA EL FONDO 1 CONFIGURADO EN EL CSS) -->
+    <div class="modal-overlay" id="modalProducto">
+        <div class="modal-content">
+            <button class="close-modal" onclick="cerrarModal()">✕</button>
+            <div class="modal-img-container">
+                <img id="imgModal" src="" alt="Gorra">
+            </div>
+            <h3 id="tituloModal">Gorra</h3>
+            <p class="precio" style="font-size: 1.4rem; color: #fff;">$45.00</p>
+            
+            <div class="modal-opciones">
+                <label for="tallaSelect">Talla:</label>
+                <select id="tallaSelect">
+                    <option value="7">7</option>
+                    <option value="7 octavo">7 octavo</option>
+                    <option value="7 un cuarto">7 un cuarto</option>
+                </select>
+
+                <div id="contenedorColorModal" style="display: none;">
+                    <label for="colorSelect">Color:</label>
+                    <select id="colorSelect" onchange="cambiarColorModal(this.value)">
+                        <option value="blanco">Blanco/Negro</option>
+                        <option value="rojo">Rojo</option>
+                        <option value="negro">Negro</option>
+                    </select>
+                </div>
+            </div>
+
+            <button class="comprar-btn" onclick="confirmarAgregado()">Agregar al carrito</button>
+        </div>
+    </div>
+
     <div class="splash-screen" id="splashScreen">
         <video autoplay loop muted playsinline preload="auto" class="video-splash">
             <source src="fondo-animado2.mp4" type="video/mp4">
         </video>
-
         <div class="logo-inicio-wrap">
-            <img src="logo.png" alt="Logo BL" class="logo-inicio" loading="eager" decoding="sync" fetchpriority="high">
+            <img src="logo2.png" alt="Logo BL" class="logo-inicio" loading="eager">
         </div>
         <button class="enter-btn" onclick="ingresarTienda()" style="z-index:2;">Enter</button>
     </div>
 
-    <!-- EL BOTÓN MULTIMEDIA -->
     <button class="audio-control" onclick="controlarMusica()" aria-label="Reproducir música"><span class="play-icon"></span></button>
 
-    <!-- EL VIDEO DE LA MÚSICA OCULTO -->
     <audio id="video-cancion" loop>
-        <source src="cancion2.mp3" type="audio/mpeg">
+        <source src="cancion3.mp3" type="audio/mpeg">
     </audio>
 
-    <!-- EL FONDO 2: EL VIDEO DE LA TORMENTA QUE APARECE AL DAR ENTER -->
     <video autoplay loop muted playsinline preload="metadata" class="video-background">
         <source src="fondo-animado3.mp4" type="video/mp4">
     </video>
 
-    <!-- CONTENIDO GLOBAL DE TU TIENDA -->
     <header>
-        <img src="logo.png" alt="Logo BL" class="logo-tienda" loading="eager" decoding="async">
+        <img src="logo2.png" alt="Logo BL" class="logo-tienda" loading="eager">
         <p>Estilo único en cada detalle</p>
     </header>
 
@@ -708,62 +704,192 @@ header p,
             
             <div class="producto-tarjeta">
                 <div class="img-container">
-                    <img src="gorra1.png" alt="Gorra Modelo 1">
+                    <img src="gorra1.png" alt="Gorra Snapback Black">
                 </div>
                 <h3>Gorra Snapback Black</h3>
                 <p class="precio">$45.00</p>
-                <a class="comprar-btn" href="https://wa.me/50300000000?text=Hola,%20quiero%20comprar%20la%20Gorra%20Snapback%20Black" target="_blank">Comprar ahora</a>
+                <button class="comprar-btn" onclick="abrirModal('Gorra Snapback Black', 45.00, 'gorra1.png', false)">Añadir al carrito</button>
             </div>
 
             <div class="producto-tarjeta">
                 <div class="img-container">
-                    <img src="gorra2.png" alt="Gorra Modelo 2">
+                    <img src="gorra2.png" alt="Gorra Trucker Camo">
                 </div>
                 <h3>Gorra Trucker Camo</h3>
                 <p class="precio">$45.00</p>
-                <a class="comprar-btn" href="https://wa.me/50300000000?text=Hola,%20quiero%20comprar%20la%20Gorra%20Trucker%20Camo" target="_blank">Comprar ahora</a>
+                <button class="comprar-btn" onclick="abrirModal('Gorra Trucker Camo', 45.00, 'gorra2.png', false)">Añadir al carrito</button>
             </div>
 
             <div class="producto-tarjeta">
                 <div class="img-container">
-                    <img src="gorra3.png" alt="Gorra Modelo 3">
+                    <img src="gorra3.png" alt="Gorra Curved Classic">
                 </div>
                 <h3>Gorra Curved Classic</h3>
                 <p class="precio">$45.00</p>
-                <a class="comprar-btn" href="https://wa.me/50300000000?text=Hola,%20quiero%20comprar%20la%20Gorra%20Curved%20Classic" target="_blank">Comprar ahora</a>
+                <button class="comprar-btn" onclick="abrirModal('Gorra Curved Classic', 45.00, 'gorra3.png', false)">Añadir al carrito</button>
+            </div>
+
+            <div class="producto-tarjeta">
+                <div class="img-container">
+                    <img src="gorra4.png" alt="Gorra Modelo 4">
+                </div>
+                <h3>Gorra Curved Classic</h3>
+                <p class="precio">$45.00</p>
+                <button class="comprar-btn" onclick="abrirModal('Gorra Curved Classic (Model 4)', 45.00, 'gorra4.png', false)">Añadir al carrito</button>
+            </div>
+
+            <div class="producto-tarjeta">
+                <div class="img-container">
+                    <img src="gorra5.png" alt="Gorra Modelo 5">
+                </div>
+                <h3>Gorra Curved Classic</h3>
+                <p class="precio">$45.00</p>
+                <button class="comprar-btn" onclick="abrirModal('Gorra Curved Classic (Model 5)', 45.00, 'gorra5.png', false)">Añadir al carrito</button>
+            </div>
+
+            <div class="producto-tarjeta">
+                <div class="img-container">
+                    <img src="gorra6blanca.png" alt="Gorra Edición Especial">
+                </div>
+                <h3>Gorra Edición Especial</h3>
+                <p class="precio">$45.00</p>
+                <button class="comprar-btn" onclick="abrirModal('Gorra Edición Especial', 45.00, 'gorra6blanca.png', true)">Añadir al carrito</button>
             </div>
 
         </div>
     </div>
 
     <script>
-
+        let carrito = [];
+        let productoActual = {};
 
         function toggleMenu(){
             document.getElementById('sideMenu').classList.toggle('active');
+        }
+
+        function toggleCart(){
+            document.getElementById('cartSidebar').classList.toggle('active');
         }
 
         function toggleCat(){
             document.getElementById('catList').classList.toggle('active');
         }
 
-        // FUNCIÓN CLAVE PARA EL CAMBIO DE FONDOS
+        // CONTROL DEL MODAL UNIVERSAL
+        function abrirModal(nombre, precio, imagen, tieneColores) {
+            productoActual = { nombre, precio, imagen, tieneColores };
+            
+            document.getElementById('tituloModal').textContent = nombre;
+            document.getElementById('imgModal').src = imagen;
+            document.getElementById('modalProducto').classList.add('active');
+
+            const contenedorColor = document.getElementById('contenedorColorModal');
+            if (tieneColores) {
+                contenedorColor.style.display = 'block';
+                document.getElementById('colorSelect').value = 'blanco'; // Reinicia a blanco por defecto
+            } else {
+                contenedorColor.style.display = 'none';
+            }
+        }
+
+        function cerrarModal() {
+            document.getElementById('modalProducto').classList.remove('active');
+        }
+
+        function cambiarColorModal(color) {
+            const img = document.getElementById('imgModal');
+            if (color === 'blanco') {
+                img.src = 'gorra6blanca.png';
+            } else if (color === 'rojo') {
+                img.src = 'gorra6roja.png';
+            } else if (color === 'negro') {
+                img.src = 'gorra6negra.png';
+            }
+        }
+
+        function confirmarAgregado() {
+            const talla = document.getElementById('tallaSelect').value;
+            let nombreFinal = productoActual.nombre;
+            let detalles = `Talla: ${talla}`;
+
+            if (productoActual.tieneColores) {
+                const colorSelect = document.getElementById('colorSelect');
+                const colorTexto = colorSelect.options[colorSelect.selectedIndex].text;
+                nombreFinal = `Gorra Edición Especial (${colorTexto})`;
+            }
+
+            carrito.push({ nombre: nombreFinal, precio: productoActual.precio, detalles: detalles });
+            actualizarCarrito();
+            cerrarModal();
+            toggleCart();
+        }
+
+        // FUNCIONES GENERALES DEL CARRITO
+        function eliminarDelCarrito(index) {
+            carrito.splice(index, 1);
+            actualizarCarrito();
+        }
+
+        function actualizarCarrito() {
+            const container = document.getElementById('cartItemsContainer');
+            const totalElement = document.getElementById('cartTotalPrice');
+            
+            container.innerHTML = '';
+            
+            if (carrito.length === 0) {
+                container.innerHTML = '<p style="color: #777; text-align: center; margin-top: 20px;">El carrito está vacío</p>';
+                totalElement.textContent = '$0.00';
+                return;
+            }
+
+            let total = 0;
+            carrito.forEach((item, index) => {
+                total += item.precio;
+                container.innerHTML += `
+                    <div class="cart-item">
+                        <div class="cart-item-info">
+                            <strong>${item.nombre}</strong>
+                            <span>${item.detalles}</span>
+                            <span>$${item.precio.toFixed(2)}</span>
+                        </div>
+                        <button class="cart-item-remove" onclick="eliminarDelCarrito(${index})">🗑</button>
+                    </div>
+                `;
+            });
+
+            totalElement.textContent = `$${total.toFixed(2)}`;
+        }
+
+        function enviarPedidoWhatsApp() {
+            if (carrito.length === 0) {
+                alert("Tu carrito está vacío.");
+                return;
+            }
+
+            let mensaje = "Hola, quiero comprar lo siguiente en Gorraland.ah:\n\n";
+            let total = 0;
+
+            carrito.forEach((item, index) => {
+                mensaje += `${index + 1}. ${item.nombre} (${item.detalles}) - $${item.precio.toFixed(2)}\n`;
+                total += item.precio;
+            });
+
+            mensaje += `\nTotal a pagar: $${total.toFixed(2)}`;
+
+            const telefono = "50300000000"; // Reemplaza con tu número
+            const url = `https://wa.me/${telefono}?text=${encodeURIComponent(mensaje)}`;
+            window.open(url, '_blank');
+        }
+
         function ingresarTienda() {
-            // 1. Desvanece el fondo inicial (Fondo 1)
             document.getElementById("splashScreen").classList.add("splash-hidden");
-            
-            // 2. Devuelve el scroll vertical a la tienda
             document.body.style.overflowY = "auto";
-            
-            // 3. Enciende la música automáticamente
             var musicaVideo = document.getElementById("video-cancion");
             musicaVideo.play();
-            // 4. Actualiza el texto del botón de música de arriba
             var boton = document.querySelector(".audio-control");
             boton.classList.add("playing");
         }
 
-        // CONTROL DE REPRODUCTOR MANUAL
         function controlarMusica() {
             var musicaVideo = document.getElementById("video-cancion");
             var boton = document.querySelector(".audio-control");
@@ -778,4 +904,4 @@ header p,
         }
     </script>
 </body>
-</html
+</html>
